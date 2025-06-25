@@ -96,13 +96,155 @@
   background-color: rgb(51, 51, 51);
   color: white;
   padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
+.stats-grid-item span[value="Regular Season"] {
+  background-color: grey;
+}
+
+.playoff-text[value="Playoff "] {
+  color: white;
+  background-color: rgb(198, 129, 2);
+}
+.playoff-text[value="Regular Season "] {
+  color: white;
+  background-color: grey;
+}
+.playoff-text {
+  color: orange;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: rgb(51, 51, 51);
+  color: white;
+  display: flex;
+  margin-right: 10px;
+}
 #match-link {
   color: orange;
   text-decoration: none;
 }
 
+
+.searchButton:active {
+  cursor: pointer;
+  background: linear-gradient(145deg, #2a2a2a, #383838);
+  border: 2px solid #646cff;
+}
+
+.searchButton:hover {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 0 15px #646cff50;
+}
+
+.searchButton {
+  border: solid black;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.searchButton::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  top: -100%;
+  left: -100%;
+  transition: all 0.5s ease;
+}
 #match-link:hover {
   color: #4a1204;
 }
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: #FF3D00;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+
+
+.searchInput {
+  border: solid black;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  }
+
+  .stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2em 0;
+    font-size: 1rem;
+    background: #181a20;
+    color: #f1f1f1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.stats-table th, .stats-table td {
+  padding: 0.75em 1.2em;
+  text-align: center;
+}
+
+.stats-table-match-type[value="Playoff"] {
+  color: rgb(198, 129, 2);
+}
+
+.stats-table th {
+  background: #23272f;
+  color: #ffb800;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #333;
+}
+
+.stats-table tr {
+  transition: background 0.2s;
+}
+
+.stats-table tr:nth-child(even) {
+  background: #20232a;
+}
+
+.stats-table tr:hover {
+  background: #282c34;
+}
+
+.stats-table td {
+  border-bottom: 1px solid #23272f;
+}
+
+.stats-table a {
+  color: #ffb800;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.stats-table a:hover {
+  color: #fff;
+} 

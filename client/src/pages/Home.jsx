@@ -11,7 +11,12 @@ function App({handleHomePageNick}) {
   const [stats, setStats] = useState([]);
   const MYKEY = "f7f1bb20-0641-462b-96ab-def0baf31f6b";
   const BASE = "https://open.faceit.com/data/v4";
+  const LEAGUE_ID  = "a14b8616-45b9-4581-8637-4dfd0b5f6af8/18dc2875-1b17-45e0-9e9b-a336ed0aecbb";
+  const [loading, setLoading] = useState(false);
+  const SEASON_ID  = "18dc2875-1b17-45e0-9e9b-a336ed0aecbb"; // optional
+  const SEASON_ID_2 = 50;
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAPI = async () => {
   const response = await axios.get(`https://open.faceit.com/data/v4/players/crspycs/stats/cs2`, {
@@ -37,8 +42,23 @@ function App({handleHomePageNick}) {
     setAvatarUrl(player.avatar);
     return player.player_id;
   }
-
-
+//https://www.faceit.com/api/team-leagues/v2/leagues/a14b8616-45b9-4581-8637-4dfd0b5f6af8/users/bcbcb95c-9155-4e0e-9140-fe44c4105406/teams/active
+  const fetchLeague = async () => {
+    (async () => {
+         try {
+           const url = `${BASE}/leagues/${LEAGUE_ID}`;                 // meta
+           // const url = `${BASE}/leagues/${LEAGUE_ID}/seasons/${SEASON_ID}`; // season
+     
+           const { data } = await axios.get(`https://open.faceit.com/data/v4/leagues/a14b8616-45b9-4581-8637-4dfd0b5f6af8`, {
+             params: {game: "cs2"},
+             headers: { Authorization: `Bearer ${MYKEY}` }
+           });
+           console.log(data);
+         } catch (err) {
+           console.error(err);   // 401 bad key, 404 wrong id, etc.
+         }
+       })();
+  }
   async function getCS2Stats(nickname) {
     
     const player_id = await fetchPlayer(nickname);
@@ -58,31 +78,36 @@ function App({handleHomePageNick}) {
     //getCS2Stats("crspy");
   }, []);
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const success = await handleHomePageNick(nickname);
-    if (success) {
+    setIsLoading(true);
+    try {
+      await handleHomePageNick(nickname);
       navigate('/stats');
-    }
-    else {
-      document.querySelector(".error-message").style.display = "block";
+    } catch (error) {
+      console.error('Error fetching stats: ', error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
     <>
       <h1>Faceit Stat Analyzer</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <input 
+          className="searchInput"
           name="nickname" 
           type="text" 
           placeholder="NiKo" 
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
         />
-        <button type="submit">Search</button>
+        <button className="searchButton" type="submit">Search</button>
       </form>
       <p className="error-message" style={{display: "none"}}>Nickname not found!</p>
+      {isLoading && <span class="loader"></span>}
       {/* TODO: Stylize each card
       Maybe make a new page for stats page
       Data analysis: average kills, deaths, assists, ADR
