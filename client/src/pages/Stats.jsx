@@ -72,7 +72,7 @@ function Stats({stats, avatarUrl, teamStats, matchStatsCollection}) {
       const fetchChampionshipData = async () => {
         //https://www.faceit.com/api/team-leagues/v1/teams/ed2c71c5-0ec3-4ada-a9f5-5f555efdaf9e/profile/leagues/summary
         //https://www.faceit.com/api/team-leagues/v1/teams/ed2c71c5-0ec3-4ada-a9f5-5f555efdaf9e/profiles/leagues/summary
-        const { data } = await axios.get(`http://localhost:8080/api/faceit/team-leagues/v1/teams/${teamStats.premade_team_id}/profile/leagues/summary`)
+        const { data } = await axios.get(`${BASE_API_URL}/api/faceit/team-leagues/v1/teams/${teamStats.premade_team_id}/profile/leagues/summary`)
         console.log(data);
         
         console.log(data.payload[0].league_seasons_info[0].season_standings);

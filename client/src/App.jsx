@@ -14,6 +14,7 @@ function App() {
   const [stats, setStats] = useState([]);
   const [teamStats, setTeamStats] = useState({});
   const MYKEY = "f7f1bb20-0641-462b-96ab-def0baf31f6b";
+  const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
   const BASE = "https://open.faceit.com/data/v4";
   const [championshipData, setChampionshipData] = useState([]);
   const [premadeTeamId, setPremadeTeamId] = useState("");
@@ -83,6 +84,11 @@ function App() {
   useEffect(() => {
     console.log('premade team id updated:', premadeTeamId);
   }, [premadeTeamId]);
+
+  useEffect(() => {
+    console.log(import.meta.env.VITE_BASE_API_URL);
+   }, []);
+
   const fetchPlayer = async (nick) => {
     const players = [];
     
@@ -106,7 +112,7 @@ function App() {
     //https://www.faceit.com/api/team-leagues/v1/teams/ed2c71c5-0ec3-4ada-a9f5-5f555efdaf9e/profile/leagues/summary
     //https://www.faceit.com/api/team-leagues/v1/teams/ed2c71c5-0ec3-4ada-a9f5-5f555efdaf9e/profiles/leagues/summary
     //console.log(teamStats.premade_team_id);
-    const { data } = await axios.get(`http://localhost:8080/api/faceit/team-leagues/v1/teams/${premade_team_id}/profile/leagues/summary`)
+    const { data } = await axios.get(`${BASE_API_URL}/api/faceit/team-leagues/v1/teams/${premade_team_id}/profile/leagues/summary`)
     console.log(data);
     //TODO: change to grab all seasons
     let championship_data = null;
@@ -137,7 +143,7 @@ function App() {
     let premade_team_id = null;
     try {
       console.log(player_id);
-      const data = await axios.get(`http://localhost:8080/api/faceit/team-leagues/v2/leagues/a14b8616-45b9-4581-8637-4dfd0b5f6af8/users/${player_id}/teams/active`);
+      const data = await axios.get(`${BASE_API_URL}/api/faceit/team-leagues/v2/leagues/a14b8616-45b9-4581-8637-4dfd0b5f6af8/users/${player_id}/teams/active`);
       console.log(data.data.payload[0]);
       setTeamStats(data.data.payload[0].team);
       console.log('premade team id: ', data.data.payload[0].team.premade_team_id)
@@ -168,7 +174,7 @@ function App() {
           let playoffid = championship_data.playoffSeasonId;
           let regid = championship_data.regularSeasonId;
           if (championship_data.playoffSeasonId) {
-            const response = await axios.get(`http://localhost:8080/api/faceit/championships/v1/matches?participantId=${premade_team_id}&participantType=${participantType}&championshipIdPlayoffs=${playoffid}&championshipIdRegular=${regid}&limit=50&offset=0&sort=ASC`);
+            const response = await axios.get(`${BASE_API_URL}/api/faceit/championships/v1/matches?participantId=${premade_team_id}&participantType=${participantType}&championshipIdPlayoffs=${playoffid}&championshipIdRegular=${regid}&limit=50&offset=0&sort=ASC`);
             data = response.data;
             const combinedMatchData = data[0].payload.items.concat(data[1].payload.items);
             console.log('combinedMatchData: ', combinedMatchData);
@@ -177,7 +183,7 @@ function App() {
           }
           else {
             console.log("fetching regular season data");
-            const response = await axios.get(`http://localhost:8080/api/faceit/championships/v1/matches?participantId=${premade_team_id}&participantType=${participantType}&championshipId=${regid}&limit=50&offset=0&sort=ASC`);
+            const response = await axios.get(`${BASE_API_URL}/api/faceit/championships/v1/matches?participantId=${premade_team_id}&participantType=${participantType}&championshipId=${regid}&limit=50&offset=0&sort=ASC`);
             data = response.data.payload.items;
           }
           //"https://www.faceit.com/api/championships/v1/matches?participantId={0}&participantType=TEAM&championshipId={1}&limit=40&offset=0&sort=ASC";
@@ -267,10 +273,9 @@ function App() {
       console.log(match.championshipId);
       const match_id = match.origin.id;
       console.log(match_id);
-      console.log(premadeTeamId);
       console.log(player_id);
       try {
-        const { data } = await axios.get(`http://localhost:8080/api/faceit/stats/v3/matches/${match_id}`);
+        const { data } = await axios.get(`${BASE_API_URL}/api/faceit/stats/v3/matches/${match_id}`);
         console.log(data);
         matchStats = data;
       }
