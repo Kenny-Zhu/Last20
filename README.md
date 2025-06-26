@@ -1,6 +1,8 @@
 # Last20
 Instructions to run:
 *Make sure to set VITE_BASE_API_URL in .env file to desired URL. Ex: http://localhost:8080 (local) or http://last20.onrender.com (service)*
+
+
 To run the application locally, cd to the client folder. Run npm I, then npm run dev
  
 To run the backend locally,
