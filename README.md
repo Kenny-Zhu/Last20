@@ -27,6 +27,8 @@ Project Description
 
 Last20 is an application to view your last 20 matches on facet and get a quick stat dashboard for it. These matches are mainly pugs but can include league matches. Las20 also analyzes your Season53 league stats and presents it in an easy, readable summary that shows individual form without having to click around on Faceit. Additionally, the season can be changed but must be manually changed via a line in App.jsx internally. It is very easy to change, you just change the line that looks for ’53’ to whatever season you wish to view.
 
+I used React for the frontend, and Python for some of the backend api calls. Originally I was not going to use python for the backend, but I found passing parameters that I wanted into my API calls easier with a python backend. The backend is purely to make API calls. In the future, I may adjust it to store actualy player data, but for now I simply used it as a ran into a CORS error without it.
+
 Development of this application was quite tedious. I used a combination of faceit’s open V4 API to fetch specific information such as playerIDs in order to grab the last 20 matches.
 
 For the league statistics, it was much harder to obtain. I had to reach API endpoints on facets official website, only viewable from the network portion of developer tools when visiting their official website. This is because Faceit’s league statistics are not accessible by their official v4 API, so I used these unofficial endpoints as a workaround to grab this specific data.
