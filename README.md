@@ -22,6 +22,7 @@ gunicorn main:app
 
 
 **OFFICIAL (sorta) URL: https://last20-static.onrender.com/stats**
+
 Project Description
 
 Last20 is an application to view your last 20 matches on facet and get a quick stat dashboard for it. These matches are mainly pugs but can include league matches. Las20 also analyzes your Season53 league stats and presents it in an easy, readable summary that shows individual form without having to click around on Faceit. Additionally, the season can be changed but must be manually changed via a line in App.jsx internally. It is very easy to change, you just change the line that looks for ’53’ to whatever season you wish to view.
