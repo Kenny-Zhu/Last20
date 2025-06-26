@@ -21,7 +21,7 @@ gunicorn main:app
 
 
 
-**OFFICIAL (sorta) URL: https://last20-static.onrender.com/stats**
+**OFFICIAL (sorta) URL: https://last20-static.onrender.com/**
 
 Project Description
 
